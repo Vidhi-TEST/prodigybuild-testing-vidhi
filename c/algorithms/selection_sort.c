@@ -1,92 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_arr(int *ptr, int size)
+void bubble_sort(int *array, int len)
 {
-    putchar('[');
-    while(size--)
+    for(int i = 0; i < len; i++)
     {
-	printf("%d", *ptr++);
-	if(size)
-	    putchar(',');
-    }
-    printf("]\n");
-}
-
-void swap(int *a, int *b)
-{
-    int tmp;
-
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
-
-int *find_min(int *ptr, int size)
-{
-    int *min;
-
-    min = ptr;
-    while(size--)
-    {
-	if(*ptr < *min)
-	    min = ptr;
-	ptr++;
-    }
-    return (min);
-}
-
-void selection_sort(int *ptr, int size)
-{
-    int *min;
-
-    while(--size)
-    {
-	if((min = find_min(ptr + 1, size)))
-	{
-	    if(*ptr > *min)
-		swap(ptr, min);
-	}
-	ptr++;
+        for(int j = 0; j < len - i - 1; j++)
+        {
+            if(array[j] > array[j + 1])
+            {
+                int tmp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = tmp;
+            }
+        }
     }
 }
 
-void fill(char **av, int *ptr, int size)
+int main(void)
 {
-    int i;
+    int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
 
-    i = 2;
-    while(av[i] && size--)
-	*ptr++ = atoi(av[i++]); 
-}
-
-int main(int argc, char *argv[])
-{
-    if(argc < 3)
+    printf("Before sorting: [");
+    for(int i = 0; i < 10; i++)
     {
-	puts("Usage: ./your-executable-name [array size] [array]");
-	puts("Example: ./your-executable-name 3 2 1 0");
-	return EXIT_FAILURE;
+        printf("%d, ", yarr[i]);
     }
-    int size = atoi(argv[1]);
-    if(!size)
+    printf("\b\b]\n");
+
+    bubble_sort(yarr, 10);
+
+    printf("After sorting:  [");
+    for(int i = 0; i < 10; i++)
     {
-	puts("Error: size of array can't be 0");
-	return EXIT_FAILURE;
+        printf("%d, ", yarr[i]);
     }
-    int *arr = (int *)malloc(size * sizeof(int));
-    if(!arr)
-	return EXIT_FAILURE;
-    fill(argv, arr, size);
+    printf("\b\b]\n");
 
-    printf("Before sorting: ");
-    print_arr(arr, size);
-
-    selection_sort(arr, size);
-
-    printf("After sorting:  ");
-    print_arr(arr, size);
-
-    free(arr);
-    return EXIT_SUCCESS;
+    return 0;
 }
