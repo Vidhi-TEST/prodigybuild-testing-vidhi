@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
+void count(int num) 
 {
     printf("[");
     
@@ -27,4 +27,5 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    return 0;
 }
