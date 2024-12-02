@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int linsearch(char **yarr, char *val, int size)
@@ -19,4 +20,5 @@ int main()
     char *val = "Shluck Much";
     int size = sizeof(yarr) / sizeof(yarr[0]);
     linsearch(yarr, val, size);
+    return 0;
 }
