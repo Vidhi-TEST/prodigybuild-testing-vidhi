@@ -1,47 +1,58 @@
-#include<stdio.h>
-#include<time.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-// function to merge the sub-arrays
-void merge(int a[], int low, int mid, int high) {
-    int b[20]; //same size of a[]
-    int i, j, k;
-    i = low, j = mid + 1, k = low;
-    while (i <= mid && j <= high) {
-        if (a[i] <= a[j])
-            b[k++] = a[i++];
-        else
-            b[k++] = a[j++]; //copying the elements 
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head;
+
+struct Node* CreateNode() {
+    struct Node* new = (struct Node*)malloc(sizeof(struct Node));
+    return new;
+}
+
+void Insert(int val) {
+    struct Node* NewNode = CreateNode();
+    NewNode->data = val;
+    NewNode->next = head;
+    head = NewNode;
+}
+
+void View() {
+    struct Node* temp = head;
+    printf("Todo List:\n");
+    while (temp != NULL) {
+        printf("%d\n", temp->data);
+        temp = temp->next;
     }
-    while (i <= mid)
-        b[k++] = a[i++];
-    while (j <= high)
-        b[k++] = a[j++];
-    for (k = low; k <= high; k++)
-        a[k] = b[k];
 }
 
-// merge sort function
-void mergesort(int a[], int low, int high) {
-    if (low >= high)
-        return;
-    int mid = (low + high) / 2;
-    mergesort(a, low, mid);
-    mergesort(a, mid + 1, high);
-    merge(a, low, mid, high);
-}
-
-// main function
 int main() {
-    int a[7] = {83, 20, 9, 50, 115, 61, 17};
-    int n = 7;
-
-    mergesort(a, 0, n - 1);
-
-    printf("\n Sorted numbers are: ");
-
-    // function to print the sorted array
-    for (int k = 0; k < 7; k++)
-        printf("%d, ", a[k]);
+    head = NULL;
+    int choice, value;
+    while (1) {
+        printf("\n1. Add task\n");
+        printf("2. View tasks\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                printf("Enter task: ");
+                scanf("%d", &value);
+                Insert(value);
+                break;
+            case 2:
+                View();
+                break;
+            case 3:
+                printf("Exiting...\n");
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+        }
+    }
     return 0;
 }

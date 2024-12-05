@@ -1,22 +1,25 @@
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
-int linsearch(char **yarr, char *val, int size)
+void insertion_sort(int *array, int len)
 {
-    for(int i = 0; i < size; i++)
+    for(int i = 1; i < len; i++)
     {
-        if(strcmp(yarr[i], val) == 0)
+        int key = array[i];
+        int j = i - 1;
+        while(j >= 0 && array[j] > key)
         {
-            return 0;
-        }    
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1] = key;
     }
-    return 1;
 }
 
 int main()
 {
-    char *yarr[] = {"Shluck much", "much Shluck"};
-    char *val = "Shluck Much";
-    int size = sizeof(yarr) / sizeof(yarr[0]);
-    linsearch(yarr, val, size);
+    int unsorted[] = {5, 6, 4, 3, 9};
+    int len = sizeof(unsorted) / sizeof(unsorted[0]);
+    insertion_sort(unsorted, len);
+    return 0;
 }

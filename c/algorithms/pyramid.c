@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void reverse_pyramid(int rows) {
     int i, j, space;
