@@ -1,47 +1,74 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int binsearch(int yarr[], int size, int element)
-{
-    int left = 0;
-    int right = size - 1;
-    int mid;
-    
-    while (left <= right)
-    {
-        mid = left + (right - left) / 2;
-        
-        if (yarr[mid] == element)
-        {
-            return mid;
-        }
-        else if (yarr[mid] < element)
-        {
-            left = mid + 1;
-        }
-        else
-        {
-            right = mid - 1;
-        }
-    }
-    
-    return -1;
+struct BST {
+    int data;
+    struct BST* left;
+    struct BST* right;
+};
+
+struct BST* CreateNode() {
+    struct BST* new = (struct BST*)malloc(sizeof(struct BST));
+    new->left = NULL;
+    new->right = NULL;
+    return new;
 }
 
-int main(int argc, char *argv[])
-{
-    int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
-    int size = sizeof(yarr) / sizeof(yarr[0]);
-    int element = atoi(argv[1]);
+void Insert(struct BST** RootPtr, int value) {
+    struct BST* temp = *RootPtr;
     
-    int result = binsearch(yarr, size, element);
-    
-    if (result != -1)
-    {
-        printf("Element found at index %d\n", result);
+    if (temp == NULL) {
+        struct BST* NewNode = CreateNode();
+        NewNode->data = value;
+        *RootPtr = NewNode;
     }
-    else
-    {
-        printf("Element not found\n");
+    else if (value <= temp->data) {
+        struct BST* NewNode = CreateNode();
+        NewNode->data = value;
+        temp->left = NewNode;
+    }
+    else {
+        struct BST* NewNode = CreateNode();
+        NewNode->data = value;
+        temp->right = NewNode;
+    }
+}
+
+int Search(struct BST* RootPtr, int item) {
+    if (RootPtr == NULL) {
+        return 0;
+    }
+    else if (item == RootPtr->data) {
+        return 1;
+    }
+    else if (item < RootPtr->data) {
+        return Search(RootPtr->left, item);
+    }
+    else {
+        return Search(RootPtr->right, item);
+    }
+}
+
+int main() {
+    struct BST* RootPtr = NULL;
+    int item, cont, key;
+    
+    do {
+        printf("Enter item: ");
+        scanf("%d", &item);
+        Insert(&RootPtr, item);
+        printf("\n1 to keep inserting/ 0 to Exit: ");
+        scanf("%d", &cont);
+    } while (cont == 1);
+    
+    printf("\nEnter element to search: ");
+    scanf("%d", &key);
+    
+    if (Search(RootPtr, key) == 0) {
+        printf("\nFound\n");
+    }
+    else {
+        printf("\nNot Found\n");
     }
     
     return 0;
