@@ -43,15 +43,6 @@ void Remove(int val) {
     free(temp);
 }
 
-void View() {
-    struct Node* temp = head;
-    printf("Todo List:\n");
-    while (temp != NULL) {
-        printf("%d\n", temp->data);
-        temp = temp->next;
-    }
-}
-
 int main() {
     head = NULL;
     int choice, value;
@@ -59,8 +50,6 @@ int main() {
     while (1) {
         printf("\n1. Add task\n");
         printf("2. Remove task\n");
-        printf("3. View tasks\n");
-        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -75,12 +64,6 @@ int main() {
                 scanf("%d", &value);
                 Remove(value);
                 break;
-            case 3:
-                View();
-                break;
-            case 4:
-                printf("Exiting...\n");
-                exit(0);
             default:
                 printf("Invalid choice\n");
         }
