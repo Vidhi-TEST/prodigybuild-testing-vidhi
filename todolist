@@ -6,26 +6,24 @@ struct Node {
     struct Node* next;
 };
 
-struct Node* head;
-
 struct Node* CreateNode() {
     struct Node* new = (struct Node*)malloc(sizeof(struct Node));
     return new;
 }
 
-void Insert(int val) {
+void Insert(struct Node** head, int val) {
     struct Node* NewNode = CreateNode();
     NewNode->data = val;
-    NewNode->next = head;
-    head = NewNode;
+    NewNode->next = *head;
+    *head = NewNode;
 }
 
-void Remove(int val) {
-    struct Node* temp = head;
+void Remove(struct Node** head, int val) {
+    struct Node* temp = *head;
     struct Node* prev = NULL;
 
     if (temp != NULL && temp->data == val) {
-        head = temp->next;
+        *head = temp->next;
         free(temp);
         return;
     }
@@ -43,7 +41,7 @@ void Remove(int val) {
     free(temp);
 }
 
-void View() {
+void View(struct Node* head) {
     struct Node* temp = head;
     printf("Todo List:\n");
     while (temp != NULL) {
@@ -53,7 +51,7 @@ void View() {
 }
 
 int main() {
-    head = NULL;
+    struct Node* head = NULL;
     int choice, value;
 
     while (1) {
@@ -68,15 +66,15 @@ int main() {
             case 1:
                 printf("Enter task: ");
                 scanf("%d", &value);
-                Insert(value);
+                Insert(&head, value);
                 break;
             case 2:
                 printf("Enter task to remove: ");
                 scanf("%d", &value);
-                Remove(value);
+                Remove(&head, value);
                 break;
             case 3:
-                View();
+                View(head);
                 break;
             case 4:
                 printf("Exiting...\n");
