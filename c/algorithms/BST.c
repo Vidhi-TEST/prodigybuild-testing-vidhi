@@ -1,69 +1,97 @@
-// Implementation of Binary Search Tree 
+// Unit tests for BST.c
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+// Mock data
 struct BST {
     int data;
     struct BST* left;
     struct BST* right;
 };
 
-struct BST *CreateNode() {
+struct BST* CreateNode() {
     struct BST* new = (struct BST*) malloc(sizeof(struct BST));
     new->left = NULL;
     new->right = NULL;
     return new; 
-};
+}
 
 void Insert(struct BST** RootPtr, int value) {
     struct BST* temp = *RootPtr;
-    if (temp == NULL) { /*When list is empty*/
+    if (temp == NULL) {
         struct BST* NewNode = CreateNode();
         NewNode->data = value;
         *RootPtr = NewNode;
-    } else if (value <= temp->data) { /*If user value is less then current node value insert in left of the node...*/
+    } else if (value <= temp->data) {
         struct BST* NewNode = CreateNode();
         NewNode->data = value;
         temp->left = NewNode;
-    } else { /*If user value is greater then current node value insert at right of the node*/
+    } else {
         struct BST* NewNode = CreateNode();
         NewNode->data = value;
         temp->right = NewNode;
     }
 }
 
-int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
+int Search(struct BST* RootPtr, int item) {
     if(RootPtr == NULL) {
-        return 0; /*Returns 0 if list is empty*/
+        return 0;
     } else if(item == RootPtr->data) {
-        return 1; /*Returns 1 when element found*/
+        return 1;
     } else if(item < RootPtr->data) {
-        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item);
     } else {
-        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(RootPtr->right, item);
     }
 }
 
-int main() {
+void testInsert() {
     struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 2);
+    Insert(&RootPtr, 4);
+    Insert(&RootPtr, 6);
+    Insert(&RootPtr, 8);
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
+    assert(RootPtr->data == 5);
+    assert(RootPtr->left->data == 3);
+    assert(RootPtr->right->data == 7);
+    assert(RootPtr->left->left->data == 2);
+    assert(RootPtr->left->right->data == 4);
+    assert(RootPtr->right->left->data == 6);
+    assert(RootPtr->right->right->data == 8);
+}
 
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
+void testSearch() {
+    struct BST* RootPtr = NULL;
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 2);
+    Insert(&RootPtr, 4);
+    Insert(&RootPtr, 6);
+    Insert(&RootPtr, 8);
 
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+    assert(Search(RootPtr, 5) == 1);
+    assert(Search(RootPtr, 3) == 1);
+    assert(Search(RootPtr, 7) == 1);
+    assert(Search(RootPtr, 2) == 1);
+    assert(Search(RootPtr, 4) == 1);
+    assert(Search(RootPtr, 6) == 1);
+    assert(Search(RootPtr, 8) == 1);
+    assert(Search(RootPtr, 1) == 0);
+    assert(Search(RootPtr, 9) == 0);
+}
+
+int main() {
+    testInsert();
+    testSearch();
+
+    printf("All tests passed!\n");
 
     return 0;
 }
