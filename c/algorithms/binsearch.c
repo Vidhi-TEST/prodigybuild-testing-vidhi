@@ -1,48 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int binsearch(int yarr[], int size, int element)
+void bubble_sort(int *array, int len)
 {
-    int left = 0;
-    int right = size - 1;
-    int mid;
-    
-    while (left <= right)
+    for (int i = 0; i < len; i++)
     {
-        mid = left + (right - left) / 2;
-        
-        if (yarr[mid] == element)
+        for (int j = 0; j < len - i - 1; j++)
         {
-            return mid;
-        }
-        else if (yarr[mid] < element)
-        {
-            left = mid + 1;
-        }
-        else
-        {
-            right = mid - 1;
+            if (array[j] > array[j + 1])
+            {
+                int tmp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = tmp;
+            }
         }
     }
-    
-    return -1;
 }
 
-int main(int argc, char *argv[])
+int main(void)
 {
     int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
-    int size = sizeof(yarr) / sizeof(yarr[0]);
-    int element = atoi(argv[1]);
+    bubble_sort(yarr, 10);
     
-    int result = binsearch(yarr, size, element);
-    
-    if (result != -1)
+    printf("[");
+    for (int i = 0; i < 10; i++)
     {
-        printf("Element found at index %d\n", result);
+        printf("%d, ", yarr[i]);
     }
-    else
-    {
-        printf("Element not found\n");
-    }
+    printf("\b\b]\n");
     
     return 0;
 }
