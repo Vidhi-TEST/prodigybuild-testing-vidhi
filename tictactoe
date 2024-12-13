@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 // Function to display the tic-tac-toe board
 void displayBoard(char board[3][3]) {
@@ -90,7 +91,68 @@ void playGame() {
     }
 }
 
+// Unit test cases for tic-tac-toe
+void testTicTacToe() {
+    char board[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+
+    // Test initial board state
+    assert(checkWin(board, 'X') == 0);
+    assert(checkWin(board, 'O') == 0);
+    assert(checkDraw(board) == 0);
+
+    // Test winning conditions
+    board[0][0] = 'X';
+    board[0][1] = 'X';
+    board[0][2] = 'X';
+    assert(checkWin(board, 'X') == 1);
+    assert(checkWin(board, 'O') == 0);
+    assert(checkDraw(board) == 0);
+
+    board[1][0] = 'O';
+    board[1][1] = 'O';
+    board[1][2] = 'O';
+    assert(checkWin(board, 'X') == 0);
+    assert(checkWin(board, 'O') == 1);
+    assert(checkDraw(board) == 0);
+
+    board[2][0] = 'X';
+    board[2][1] = 'X';
+    board[2][2] = 'X';
+    assert(checkWin(board, 'X') == 1);
+    assert(checkWin(board, 'O') == 0);
+    assert(checkDraw(board) == 0);
+
+    board[0][0] = 'O';
+    board[1][1] = 'O';
+    board[2][2] = 'O';
+    assert(checkWin(board, 'X') == 0);
+    assert(checkWin(board, 'O') == 1);
+    assert(checkDraw(board) == 0);
+
+    board[0][2] = 'X';
+    board[1][1] = 'X';
+    board[2][0] = 'X';
+    assert(checkWin(board, 'X') == 1);
+    assert(checkWin(board, 'O') == 0);
+    assert(checkDraw(board) == 0);
+
+    // Test draw condition
+    board[0][0] = 'X';
+    board[0][1] = 'O';
+    board[0][2] = 'X';
+    board[1][0] = 'X';
+    board[1][1] = 'O';
+    board[1][2] = 'O';
+    board[2][0] = 'O';
+    board[2][1] = 'X';
+    board[2][2] = 'X';
+    assert(checkWin(board, 'X') == 0);
+    assert(checkWin(board, 'O') == 0);
+    assert(checkDraw(board) == 1);
+}
+
 int main() {
+    testTicTacToe();
     playGame();
     return 0;
 }
