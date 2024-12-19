@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct Node {
     int data;
@@ -27,6 +28,21 @@ void View() {
         printf("%d\n", temp->data);
         temp = temp->next;
     }
+}
+
+void TestInsert() {
+    Insert(1);
+    Insert(2);
+    Insert(3);
+}
+
+void TestView() {
+    View();
+}
+
+void Test() {
+    TestInsert();
+    TestView();
 }
 
 int main() {
