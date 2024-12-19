@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 void insertion_sort(int *array, int len) {
     for (int i = 1; i < len; i++) {
@@ -19,6 +20,13 @@ int main() {
     int len = sizeof(unsorted) / sizeof(unsorted[0]);
     
     insertion_sort(unsorted, len);
+    
+    // Unit test cases
+    assert(unsorted[0] == 3);
+    assert(unsorted[1] == 4);
+    assert(unsorted[2] == 5);
+    assert(unsorted[3] == 6);
+    assert(unsorted[4] == 9);
     
     return 0;
 }
