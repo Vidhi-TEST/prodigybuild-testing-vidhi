@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 int linsearch(char **yarr, char *val, int size)
 {
@@ -13,10 +15,21 @@ int linsearch(char **yarr, char *val, int size)
     return 1;
 }
 
-int main()
+void test_linsearch()
 {
     char *yarr[] = {"Shluck much", "much Shluck"};
-    char *val = "Shluck Much";
+    char *val1 = "Shluck much";
+    char *val2 = "much Shluck";
+    char *val3 = "Not Found";
     int size = sizeof(yarr) / sizeof(yarr[0]);
-    linsearch(yarr, val, size);
+
+    assert(linsearch(yarr, val1, size) == 0);
+    assert(linsearch(yarr, val2, size) == 0);
+    assert(linsearch(yarr, val3, size) == 1);
+}
+
+int main()
+{
+    test_linsearch();
+    return 0;
 }
