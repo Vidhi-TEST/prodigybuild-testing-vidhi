@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 // Function to display the tic-tac-toe board
 void displayBoard(char board[3][3]) {
@@ -19,39 +22,39 @@ void displayBoard(char board[3][3]) {
 }
 
 // Function to check if the game has been won
-int checkWin(char board[3][3], char player) {
+bool checkWin(char board[3][3], char player) {
     // Check rows
     for (int i = 0; i < 3; i++) {
         if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
-            return 1;
+            return true;
         }
     }
     // Check columns
     for (int j = 0; j < 3; j++) {
         if (board[0][j] == player && board[1][j] == player && board[2][j] == player) {
-            return 1;
+            return true;
         }
     }
     // Check diagonals
     if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
-        return 1;
+        return true;
     }
     if (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
 // Function to check if the game is a draw
-int checkDraw(char board[3][3]) {
+bool checkDraw(char board[3][3]) {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (board[i][j] == ' ') {
-                return 0;
+                return false;
             }
         }
     }
-    return 1;
+    return true;
 }
 
 // Function to play the tic-tac-toe game
@@ -59,7 +62,7 @@ void playGame() {
     char board[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
     char currentPlayer = 'X';
     int row, col;
-    int gameOver = 0;
+    bool gameOver = false;
 
     while (!gameOver) {
         displayBoard(board);
@@ -79,11 +82,11 @@ void playGame() {
         if (checkWin(board, currentPlayer)) {
             displayBoard(board);
             printf("Player %c wins!\n", currentPlayer);
-            gameOver = 1;
+            gameOver = true;
         } else if (checkDraw(board)) {
             displayBoard(board);
             printf("It's a draw!\n");
-            gameOver = 1;
+            gameOver = true;
         }
 
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
