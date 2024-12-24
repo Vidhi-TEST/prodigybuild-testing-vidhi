@@ -1,69 +1,67 @@
-// Implementation of Binary Search Tree 
+// Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
 
-struct BST {
-    int data;
-    struct BST* left;
-    struct BST* right;
+struct Node {
+    int value;
+    struct Node *next;
+    struct Node *prev;
 };
 
-struct BST *CreateNode() {
-    struct BST* new = (struct BST*) malloc(sizeof(struct BST));
-    new->left = NULL;
-    new->right = NULL;
-    return new; 
-};
+struct Node *head;
 
-void Insert(struct BST** RootPtr, int value) {
-    struct BST* temp = *RootPtr;
-    if (temp == NULL) { /*When list is empty*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        *RootPtr = NewNode;
-    } else if (value <= temp->data) { /*If user value is less then current node value insert in left of the node...*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->left = NewNode;
-    } else { /*If user value is greater then current node value insert at right of the node*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->right = NewNode;
+struct Node *CreateNode() {
+    struct Node *new = (struct Node*) malloc(sizeof(struct Node));
+    return new;
+}
+
+void Insert(int val) {
+    struct Node *NewNode = CreateNode();
+    NewNode->value = val;
+    NewNode->next = head;
+    NewNode->prev = NULL;
+
+    if (head != NULL) {
+        head->prev = NewNode;
+    }
+
+    head = NewNode;
+}
+
+void Display() {
+    struct Node *temp = head;
+    printf("\nForward:\n");
+    while (temp != NULL) {
+        printf("%d ", temp->value);
+        temp = temp->next;
     }
 }
 
-int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
-    if(RootPtr == NULL) {
-        return 0; /*Returns 0 if list is empty*/
-    } else if(item == RootPtr->data) {
-        return 1; /*Returns 1 when element found*/
-    } else if(item < RootPtr->data) {
-        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
-    } else {
-        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+void ReverseDisplay() {
+    struct Node *temp = head;
+    while (temp->next != NULL) {
+        temp = temp->next;
     }
+
+    printf("\nBackward:\n");
+    while (temp != NULL) {
+        printf("%d ", temp->value);
+        temp = temp->prev;
+    }
+    printf("\n");
 }
 
-int main() {
-    struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+void main() {
+    int n, val;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
-
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
-
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
+    for (int i = 0; i < n; i++) {
+        printf("Enter element: ");
+        scanf("%d", &val);
+        Insert(val);
     }
 
-    return 0;
+    Display();
+    ReverseDisplay();
 }
