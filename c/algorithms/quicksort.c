@@ -5,29 +5,39 @@ void swap(int *a, int *b);
 int partition(int *a, int l, int h);
 void quick_sort(int *a, int l, int h);
 
-int main()
+void test_quick_sort()
 {
-    int size;
-    printf("Size: ");
-    scanf("%d", &size);
-
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
+    int test1[] = {5, 4, 3, 2, 1};
+    int size1 = sizeof(test1) / sizeof(test1[0]);
+    quick_sort(test1, 0, size1 - 1);
+    for (int i = 0; i < size1; i++)
     {
-        scanf("%d", &arr[i]);
-    }
-
-    quick_sort(arr, 0, size - 1);
-
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
-    {
-        printf(" %d", arr[i]);
+        printf("%d ", test1[i]);
     }
     printf("\n");
 
-    free(arr);
+    int test2[] = {1, 2, 3, 4, 5};
+    int size2 = sizeof(test2) / sizeof(test2[0]);
+    quick_sort(test2, 0, size2 - 1);
+    for (int i = 0; i < size2; i++)
+    {
+        printf("%d ", test2[i]);
+    }
+    printf("\n");
+
+    int test3[] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
+    int size3 = sizeof(test3) / sizeof(test3[0]);
+    quick_sort(test3, 0, size3 - 1);
+    for (int i = 0; i < size3; i++)
+    {
+        printf("%d ", test3[i]);
+    }
+    printf("\n");
+}
+
+int main()
+{
+    test_quick_sort();
     return 0;
 }
 
