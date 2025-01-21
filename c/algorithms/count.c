@@ -19,6 +19,7 @@ int count(int num)
             
         printf("]");
     }
+    return 0; // Added return statement
 }
 
 int main()
@@ -27,4 +28,5 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+
 }

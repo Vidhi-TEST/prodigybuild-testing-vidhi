@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<time.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 // function to merge the sub-arrays
 void merge(int a[], int low, int mid, int high) {
@@ -31,17 +31,6 @@ void mergesort(int a[], int low, int high) {
     merge(a, low, mid, high);
 }
 
-// main function
-int main() {
-    int a[7] = {83, 20, 9, 50, 115, 61, 17};
-    int n = 7;
 
-    mergesort(a, 0, n - 1);
-
-    printf("\n Sorted numbers are: ");
-
-    // function to print the sorted array
-    for (int k = 0; k < 7; k++)
-        printf("%d, ", a[k]);
     return 0;
 }
